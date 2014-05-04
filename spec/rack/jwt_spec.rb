@@ -4,9 +4,13 @@ require "jwt"
 
 describe Rack::JWT do
   include Rack::Test::Methods
+
   let(:app) do
     inner = lambda { |env| [200, env, ["Hello"]] }
-    options = {secret: "secret", auth_path: "/authenticate"}
+    options = {
+      secret: "secret",
+      grant_path: "/authenticate",
+    }
 
     Rack::JWT.new(inner, options) do |request|
       if request.POST["username"] == "alex" && request.POST["password"] == "password"

@@ -9,14 +9,14 @@ module Rack
     def initialize(app, options={}, &block)
       @app = app
       @secret = options.fetch(:secret)
-      @auth_path = options.fetch(:auth_path)
+      @grant_path = options.fetch(:grant_path)
       @auth_block = block
     end
 
     def call(env)
       request = Request.new(env)
 
-      if request.post? && request.path == @auth_path
+      if request.post? && request.path == @grant_path
         create_token(request)
       else
         authorize(request)
