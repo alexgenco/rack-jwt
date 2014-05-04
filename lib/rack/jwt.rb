@@ -1,4 +1,5 @@
 require "jwt"
+require "rack"
 require "rack/jwt/version"
 
 module Rack
@@ -13,6 +14,8 @@ module Rack
       claim = ::JWT.decode(jwt, @secret)
       env["rack.jwt.claim"] = claim
       @app.call(env)
+    rescue ::JWT::DecodeError
+      Rack::Response.new(["Unauthorized"], 401).finish
     end
   end
 end
