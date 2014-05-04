@@ -32,6 +32,6 @@ describe Rack::JWT::Authenticate do
     invalid_jwt = ::JWT.encode({user_id: 123}, "invalid")
     get "/", {}, {"Authorization" => "JWT #{invalid_jwt}"}
     expect(last_response.status).to eq(401)
-    expect(last_response.body).to eq("Unauthorized")
+    expect(last_response.headers["WWW-Authenticate"]).to eq("JWT realm=\"api\"")
   end
 end
