@@ -24,7 +24,7 @@ module Rack
 
       def unauthorized
         headers = {"WWW-Authenticate" => "JWT realm=\"api\""}
-        Response.new(["Unauthorized"], 401, headers).finish
+        Response.new([], 401, headers).finish
       end
     end
   end

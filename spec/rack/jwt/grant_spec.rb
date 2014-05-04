@@ -27,6 +27,6 @@ describe Rack::JWT::Grant do
   it "returns 401 for an unauthentic username and password" do
     post "/authenticate", username: "alex", password: "wrong-password"
     expect(last_response.status).to eq(401)
-    expect(last_response.body).to eq("Unauthorized")
+    expect(last_response.headers["WWW-Authenticate"]).to eq("JWT realm=\"api\"")
   end
 end

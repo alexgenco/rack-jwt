@@ -30,7 +30,8 @@ module Rack
 
           Response.new([payload], 201).finish
         else
-          Response.new(["Unauthorized"], 401).finish
+          headers = {"WWW-Authenticate" => "JWT realm=\"api\""}
+          Response.new([], 401, headers).finish
         end
       end
     end
