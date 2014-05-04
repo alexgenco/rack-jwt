@@ -14,10 +14,17 @@ module Rack
 
           @app.call(env)
         else
-          Response.new(["Unauthorized"], 401).finish
+          unauthorized
         end
       rescue ::JWT::DecodeError
-        Response.new(["Unauthorized"], 401).finish
+        unauthorized
+      end
+
+      private
+
+      def unauthorized
+        headers = {"WWW-Authenticate" => "JWT realm=\"api\""}
+        Response.new(["Unauthorized"], 401, headers).finish
       end
     end
   end
