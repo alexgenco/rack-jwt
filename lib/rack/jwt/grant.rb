@@ -14,7 +14,7 @@ module Rack
       def call(env)
         request = Request.new(env)
 
-        if request.post? && request.path == @path
+        if request.post? && request.path_info == @path
           create_token(request)
         else
           @app.call(env)
